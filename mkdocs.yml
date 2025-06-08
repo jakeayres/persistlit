@@ -6,10 +6,13 @@ site_description: Better perisistent streamlit widgets
 
 nav:
   - Home: index.md
+  - Usage: usage.md
   - Widgets: widgets.md
 
 theme:
   name: material
+  palette:
+    primary: red
   icon:
     repo: fontawesome/brands/git
   features:
@@ -18,8 +21,11 @@ theme:
 
 markdown_extensions:
   - attr_list
+  - admonition
   - md_in_html
   - pymdownx.blocks.caption
+  - pymdownx.superfences
+  - pymdownx.snippets
   
 plugins:
   - search
