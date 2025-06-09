@@ -1,14 +1,13 @@
 import streamlit as st
 
 
-
 def _store_value(key):
     # Safely initialize both keys if missing
     if key not in st.session_state:
         st.session_state[key] = None
     if f"_{key}" not in st.session_state:
         st.session_state[f"_{key}"] = None
-    st.session_state[key] = st.session_state["_"+key]
+    st.session_state[key] = st.session_state["_" + key]
 
 
 def _load_value(key):
@@ -21,76 +20,35 @@ def _load_value(key):
     return st.session_state[f"_{key}"]
 
 
-def _ensure_key_exist(key):
-    if key not in st.session_state:
-        st.session_state[key] = None
-        
-        
-def _ensure_underscore_key_exist(key):
-    if f"_{key}" not in st.session_state:
-        st.session_state[f"_{key}"] = None
+def _make_on_change_callback(key, **kwargs):
+    if "on_change" in kwargs:
+        provided_on_change = kwargs.pop("on_change")
+
+        def combined_callback(*args):
+            provided_on_change(*args)
+            _store_value(key)
+            st.write(key, "updated")
+
+        return kwargs, combined_callback
+
+    else:
+        return kwargs, lambda: _store_value(key)
 
 
-def get(key):
-    return st.session_state[key]
+def text_input(label, persistant=False, **kwargs):
+    if persistant:
+        key = kwargs.pop("key", label)
 
+        kwargs, _on_change = _make_on_change_callback(key, **kwargs)
 
-def set(key, value):
-    _ensure_key_exist(key)
-    st.session_state[key] = value    
-        
-    
+        x = st.text_input(
+            label=label,
+            value=_load_value(key),
+            key=f"_{key}",
+            on_change=_on_change,
+            **kwargs,
+        )
+        return x
 
-def text_input(key, **kwargs):
-    _ensure_key_exist(key)
-    _ensure_underscore_key_exist(key)
-    if kwargs.get("default", None) is not None:
-        set(key, kwargs['default'])
-        kwargs.pop("default")
-    st.text_input(
-        label=kwargs.pop("label", key),
-        value=_load_value(key),
-        key=f"_{key}",
-        on_change=_store_value, 
-        args=[key],
-        **kwargs,
-    )
-    return st.session_state[key]
-
-
-def number_input(key, **kwargs):
-    _ensure_key_exist(key)
-    _ensure_underscore_key_exist(key)
-    if kwargs.get("default", None) is not None:
-        set(key, kwargs['default'])
-        kwargs.pop("default")
-    st.number_input(
-        label=kwargs.pop("label", key),
-        value=_load_value(key),
-        key=f"_{key}",
-        on_change=_store_value, 
-        args=[key],
-        **kwargs,
-    )
-    return st.session_state[key]
-
-
-def pills(key, *args, **kwargs):
-    _ensure_key_exist(key)
-    _ensure_underscore_key_exist(key)
-    if kwargs.get("default", None) is not None:
-        set(key, kwargs['default'])
-        kwargs.pop("default")
-    st.pills(
-        label=kwargs.pop("label", key),
-        default=_load_value(key),
-        key=f"_{key}",
-        on_change=_store_value, 
-        args=[key],
-        *args, 
-        **kwargs,
-    )
-    return st.session_state[key]
-
-
-
+    else:
+        return st.text_input(label=label, **kwargs)

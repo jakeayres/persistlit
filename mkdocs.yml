@@ -5,8 +5,10 @@ site_description: Better perisistent streamlit widgets
 
 
 nav:
-  - Home: index.md
-  - Usage: usage.md
+  - Quickstart: 
+    - Overview: index.md
+    - Installation: installation.md
+    - Usage: usage.md
   - Widgets: widgets.md
 
 theme:
@@ -18,15 +20,19 @@ theme:
   features:
     - navigation.footer
     - navigation.tabs
+    - content.tabs.link
+    - content.code.copy
+    - content.grid
 
 markdown_extensions:
   - attr_list
   - admonition
   - md_in_html
+  - pymdownx.details
   - pymdownx.blocks.caption
   - pymdownx.superfences
   - pymdownx.snippets
-  
+
 plugins:
   - search
   - mkdocstrings:
