@@ -1,6 +1,6 @@
 [project]
 name = "persistlit"
-version = "0.1.0"
+version = "0.1.1"
 description = "Better persistent streamlit widgets"
 readme = "README.md"
 authors = [
