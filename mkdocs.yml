@@ -5,10 +5,7 @@ site_description: Better perisistent streamlit widgets
 
 
 nav:
-  - Quickstart: 
-    - Overview: index.md
-    - Installation: installation.md
-    - Usage: usage.md
+  - Quickstart: index.md
   - Widgets: widgets.md
 
 theme:

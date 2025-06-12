@@ -1,6 +1,16 @@
 # Persistlit
 
-Convenient `streamlit` widgets that persist between reloads and between pages.
+Convenient `streamlit` widgets that persist between pages.
+
+## Installation
+
+Persistlit is hosted on pypi. Install using pip:
+
+`pip install persistlit`
+
+or (preferably) a dependency manager like `uv`:
+
+`uv add persistlit`
 
 ## Purpose
 

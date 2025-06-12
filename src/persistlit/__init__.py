@@ -35,8 +35,8 @@ def _make_on_change_callback(key, **kwargs):
         return kwargs, lambda: _store_value(key)
 
 
-def text_input(label, persistant=False, **kwargs):
-    if persistant:
+def text_input(label, persistent=False, **kwargs):
+    if persistent:
         key = kwargs.pop("key", label)
 
         kwargs, _on_change = _make_on_change_callback(key, **kwargs)
@@ -52,3 +52,22 @@ def text_input(label, persistant=False, **kwargs):
 
     else:
         return st.text_input(label=label, **kwargs)
+
+
+def number_input(label, persistent=False, **kwargs):
+    if persistent:
+        key = kwargs.pop("key", label)
+
+        kwargs, _on_change = _make_on_change_callback(key, **kwargs)
+
+        x = st.number_input(
+            label=label,
+            value=_load_value(key),
+            key=f"_{key}",
+            on_change=_on_change,
+            **kwargs,
+        )
+        return x
+
+    else:
+        return st.number_input(label=label, **kwargs)
