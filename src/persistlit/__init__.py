@@ -71,3 +71,43 @@ def number_input(label, persistent=False, **kwargs):
 
     else:
         return st.number_input(label=label, **kwargs)
+    
+
+def radio(label, options, persistent=False, **kwargs):
+    if persistent:
+        key = kwargs.pop("key", label)
+
+        kwargs, _on_change = _make_on_change_callback(key, **kwargs)
+
+        x = st.radio(
+            label=label,
+            options=options,
+            index=options.index(_load_value(key)) if _load_value(key) in options else 0,
+            key=f"_{key}",
+            on_change=_on_change,
+            **kwargs,
+        )
+        return x
+
+    else:
+        return st.radio(label=label, options=options, **kwargs)
+    
+
+def pills(label, options, persistent=False, **kwargs):
+    if persistent:
+        key = kwargs.pop("key", label)
+
+        kwargs, _on_change = _make_on_change_callback(key, **kwargs)
+
+        x = st.pills(
+            label=label,
+            options=options,
+            default=_load_value(key),
+            key=f"_{key}",
+            on_change=_on_change,
+            **kwargs,
+        )
+        return x
+
+    else:
+        return st.pills(label=label, options=options, **kwargs)
