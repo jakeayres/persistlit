@@ -37,17 +37,17 @@ This will persist between page reload (utilizing `session_state["x"]`). But, whe
 `persistlit` adds a `persistant` boolean keyword argument to achieve precisely this: 
 
 ```python title="/pages/page1.py"
-x = pt.text_input("Persistlit text input", peristant=True)
+x = pt.text_input("Persistlit text input", persistent=True)
 do_something_with_x(x)
 ```
 
 ```python title="/pages/page2.py"
-x = pt.text_input("Persistlit text input", peristant=True)
+x = pt.text_input("Persistlit text input", persistent=True)
 do_something_different_with_x(x)
 ```
 
 ```python title="/pages/page3.py"
-st.write(st.session_state['x'])
+st.write(st.session_state['Persistlit text input'])
 ```
 
 The widget is otherwise functionally equivalent to `st.text_input()`
